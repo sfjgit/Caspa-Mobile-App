@@ -1,0 +1,29 @@
+.homeContainer {
+  .titleArea {
+    @apply rounded-lg bg-white;
+    h1 {
+      @apply text-lg p-3 font-semibold text-gray-600 flex items-center;
+    }
+  }
+  .title {
+    @apply mt-5;
+    h2 {
+      @apply text-gray-700 font-semibold;
+    }
+    p {
+      @apply text-gray-700 text-sm;
+    }
+  }
+  .listItemsArea {
+    @apply my-3 grid grid-cols-2 gap-5;
+    .card {
+      @apply bg-white p-2 rounded-tl-3xl rounded-br-3xl text-center;
+      h2 {
+        @apply text-gray-700 text-sm my-2;
+      }
+      img {
+        @apply m-auto w-14;
+      }
+    }
+  }
+}

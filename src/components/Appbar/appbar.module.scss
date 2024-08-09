@@ -1,0 +1,16 @@
+.appbarContainer {
+  @apply absolute bottom-0 h-14 p-5 border-t-2 border-gray-100 w-full flex items-center bg-white;
+  .row {
+    @apply flex justify-between w-full;
+    .area {
+      @apply text-center;
+      img {
+        @apply w-full;
+        height: 24px;
+      }
+      p {
+        @apply text-gray-700 text-xs;
+      }
+    }
+  }
+}

@@ -1,0 +1,28 @@
+.container {
+  @apply h-screen bg-white px-5 py-10 relative;
+  .logo {
+    width: 80px;
+  }
+  h1 {
+    margin-top: 25px;
+    @apply font-bold text-black;
+  }
+  p {
+    @apply font-medium text-sm text-gray-600;
+  }
+  .inputarea {
+    @apply mt-5;
+    label {
+      @apply font-bold text-sm text-gray-600 leading-5;
+    }
+    .input {
+      @apply w-full h-10 rounded-md border p-2 text-sm;
+    }
+    .button {
+      @apply bg-primary text-white h-10 rounded-md w-full;
+    }
+    .management {
+      @apply absolute bottom-0 w-10/12;
+    }
+  }
+}

@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.headerContainer {
+  @apply w-full h-16 shadow-md bg-primary text-white px-5;
+  .logobar {
+    @apply flex justify-between items-center h-16;
+    .backarea {
+      @apply flex gap-2 items-center;
+    }
+  }
+  .hamburger {
+    @apply bg-secondary rounded-full p-2;
+  }
+}

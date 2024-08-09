@@ -1,0 +1,17 @@
+.badge {
+  @apply font-medium  px-3 rounded-xl text-sm;
+  font-size: 12px;
+}
+.ongoing {
+  @apply bg-gray-100 text-gray-600;
+}
+.completed {
+  @apply bg-green text-white;
+}
+.ongoing {
+  @apply bg-sky text-white;
+}
+
+.scheduled {
+  @apply bg-stone text-white;
+}
