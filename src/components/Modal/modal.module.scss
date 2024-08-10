@@ -11,10 +11,14 @@
     }
     .children {
       @apply overflow-auto;
-      height: 400px;
+      height: 460px;
     }
     .button {
       @apply bg-primary text-white rounded-lg w-full h-10;
+      bottom: 25px;
+      position: absolute;
+      left: 10%;
+      width: 80%;
     }
   }
 }
