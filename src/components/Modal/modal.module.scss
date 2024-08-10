@@ -11,7 +11,7 @@
     }
     .children {
       @apply overflow-auto;
-      min-height: 70vh;
+      height: 400px;
     }
     .button {
       @apply bg-primary text-white rounded-lg w-full h-10;
