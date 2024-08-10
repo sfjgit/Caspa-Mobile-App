@@ -13,6 +13,7 @@ export default {
         black: colors.black,
         white: colors.white,
         slate: colors.slate,
+        error: "#B00020",
         gray: {
           50: "#FAFAFC",
           100: "#E9E9EC",

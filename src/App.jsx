@@ -1,10 +1,16 @@
 import "./App.css";
 // import { Route, Routes  } from "react-router-dom";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  Navigate,
+  RouterProvider,
+} from "react-router-dom";
 import Layout from "./components/Layout/layout";
 import Home from "./Pages/Home";
 import Login from "./Pages/Login/login";
 import ApplicationAwaiting from "./Pages/ApplicantWaiting";
+import Cookies from "universal-cookie";
+// import ProtectedRoute from "./ProtectedRoute";
 
 // import router from "./router";
 
@@ -16,6 +22,7 @@ import ApplicationAwaiting from "./Pages/ApplicantWaiting";
 //         path: "dashboard",
 //         element: <Home />,
 //       },
+
 //       {
 //         path: "home",
 //         element: <Home />,
@@ -28,6 +35,16 @@ import ApplicationAwaiting from "./Pages/ApplicantWaiting";
 //   },
 // ]);
 
+const getAccessToken = () => {
+  const cookie = new Cookies();
+  return cookie.get("token");
+};
+
+// Function to check if the user is authenticated
+const isAuthenticated = () => {
+  return !!getAccessToken();
+};
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -35,8 +52,9 @@ const router = createBrowserRouter([
     index: true,
   },
   {
+    element: isAuthenticated() ? <Layout /> : <Navigate to="/" />,
     // parent route component
-    element: <Layout />,
+    // element: <Layout />,
     // child route components
     children: [
       {
@@ -53,6 +71,7 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
+  console.log(isAuthenticated());
   return (
     <>
       <RouterProvider

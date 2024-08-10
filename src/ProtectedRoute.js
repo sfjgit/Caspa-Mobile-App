@@ -1,12 +1,17 @@
-// import React from "react";
-import { Outlet } from "react-router-dom";
-import Layout from "./components/Layout";
+// ProtectedRoute.js
+import React from "react";
+import { Navigate, Outlet } from "react-router-dom";
+import Login from "./Pages/Login/login";
+import Layout from "./components/Layout/layout";
 
-const ProtectedRoute = () => {
+const ProtectedRoute = ({ isAuthenticated }) => {
+  console.log(isAuthenticated, "Sdfsdfdsfdsf sfsdf");
+  // Redirect to login page if not authenticated
   // if (!isAuthenticated) {
-  //   return <Navigate to="/" replace />;
+  //   return <Login />;
   // }
 
+  // Render children components if authenticated
   return <Layout />;
 };
 
