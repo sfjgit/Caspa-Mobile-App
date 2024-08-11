@@ -1,4 +1,5 @@
 import "./App.css";
+import { useState } from "react";
 // import { Route, Routes  } from "react-router-dom";
 import {
   createBrowserRouter,
@@ -10,6 +11,8 @@ import Home from "./Pages/Home";
 import Login from "./Pages/Login/login";
 import ApplicationAwaiting from "./Pages/ApplicantWaiting";
 import Cookies from "universal-cookie";
+import { useEffect } from "react";
+import ProtectedRoute from "./ProtectedRoute";
 // import ProtectedRoute from "./ProtectedRoute";
 
 // import router from "./router";
@@ -45,37 +48,51 @@ const isAuthenticated = () => {
   return !!getAccessToken();
 };
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Login />,
-    index: true,
-  },
-  {
-    element: isAuthenticated() ? <Layout /> : <Navigate to="/" />,
-    // parent route component
-    // element: <Layout />,
-    // child route components
-    children: [
-      {
-        path: "/dashboard",
-        element: <Home />,
-      },
-      // other pages....
-      {
-        path: "/applicant-awaiting",
-        element: <ApplicationAwaiting />,
-      },
-    ],
-  },
-]);
-
 function App() {
   console.log(isAuthenticated());
+  // const [token, settoken] = useState(null);
+
+  const cookie = new Cookies();
+
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <Login />,
+      index: true,
+    },
+    {
+      element: <ProtectedRoute isAuthenticated={isAuthenticated()} />,
+      // parent route component
+      // element: <Layout />,
+      // child route components
+      children: [
+        {
+          path: "/",
+          element: <Home />,
+        },
+        {
+          path: "/dashboard",
+          element: <Home />,
+        },
+        // other pages....
+        {
+          path: "/applicant-awaiting",
+          element: <ApplicationAwaiting />,
+        },
+      ],
+    },
+  ]);
+  // useEffect(() => {
+  //   console.log("SDFsdfsdf");
+  //   isAuthenticated();
+  //   settoken(cookie.get("token"));
+  // }, [cookie.get("token")]);
+  // console.log(token, isAuthenticated());
   return (
     <>
       <RouterProvider
         router={router}
+
         //  fallbackElement={<BigSpinner />}
       />
       {/* <Routes>
