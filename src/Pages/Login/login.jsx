@@ -50,19 +50,34 @@ const Login = () => {
   const onSubmit = (data) => {
     console.log("Login data:", data);
 
-    cookie.set(
-      "token",
-      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MjMzMTcwNDMsImV4cCI6MTcyMzMyMDY0MywiaXNzIjoieW91cl93ZWJzaXRlX29yX3N5c3RlbV9uYW1lIiwiZGF0YSI6eyJpZCI6IjEiLCJlbWFpbCI6InNpdmEuc0BzZmpicy5jb20iLCJmdWxsbmFtZSI6IlNpdmEgU2FyYXRoeSIsInVzZXJ0eXBlIjoiMSJ9fQ.04o4tpAbRy0XGalJYGTyfbQ2TA6yhMju4JHqFMFiAZc",
-      { path: "/" }
-    );
+    const headers = {
+      "Content-Type": "text/plain",
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Credentials": true,
+    };
 
-    navigate("/dashboard");
+    // cookie.set(
+    //   "token",
+    //   "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MjMzMTcwNDMsImV4cCI6MTcyMzMyMDY0MywiaXNzIjoieW91cl93ZWJzaXRlX29yX3N5c3RlbV9uYW1lIiwiZGF0YSI6eyJpZCI6IjEiLCJlbWFpbCI6InNpdmEuc0BzZmpicy5jb20iLCJmdWxsbmFtZSI6IlNpdmEgU2FyYXRoeSIsInVzZXJ0eXBlIjoiMSJ9fQ.04o4tpAbRy0XGalJYGTyfbQ2TA6yhMju4JHqFMFiAZc",
+    //   { path: "/" }
+    // );
+
+    // navigate("/dashboard");
     axios
-      .post(`${BaseUrl}/login.php`, {
-        ...data,
-      })
+      .post(
+        `${BaseUrl}login.php`,
+        {
+          ...data,
+        }
+
+        // { withCredentials: false, headers }
+      )
       .then(function (response) {
         console.log(response);
+        if (response?.status === 200) {
+          cookie.set("token", response?.data?.token, { path: "/" });
+          navigate("/dashboard");
+        }
       })
       .catch(function (error) {
         console.log(error);
