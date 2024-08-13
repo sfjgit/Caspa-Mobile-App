@@ -1,5 +1,5 @@
 .modalContainer {
-  @apply w-screen h-screen z-40 min-h-screen fixed top-0 left-0;
+  @apply w-screen h-screen z-40 min-h-screen fixed top-0 left-0 lg:w-4/12 lg:m-auto lg:left-1/3;
   .overlay {
     @apply opacity-50 bg-black absolute w-full h-full;
   }

@@ -23,6 +23,9 @@
     }
     .management {
       @apply absolute bottom-0 w-10/12;
+      img {
+        @apply lg:right-0 lg:w-96;
+      }
     }
     .error {
       @apply text-error h-4;

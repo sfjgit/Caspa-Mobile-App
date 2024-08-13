@@ -1,5 +1,5 @@
 .appbarContainer {
-  @apply absolute bottom-0 h-14 p-5 border-t-2 border-gray-100 w-full flex items-center bg-white;
+  @apply absolute bottom-0 h-14 p-5 border-t-2 border-gray-100 w-full flex items-center bg-white lg:w-4/12;
   .row {
     @apply flex justify-between w-full;
     .area {

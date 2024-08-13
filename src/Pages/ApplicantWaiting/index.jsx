@@ -3,6 +3,9 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable */
 
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { BaseUrl } from "../../config";
 import Title from "../../CommonComponents/Title/title";
 import Card from "../../CommonComponents/Card/card";
 import Modal from "../../components/Modal/modal";
@@ -11,7 +14,6 @@ import Badge from "../../CommonComponents/Badge/Badge";
 import ViewMore from "../../assets/viewmore.png";
 
 import styles from "./index.module.scss";
-import { useState } from "react";
 
 const sampleData = [
   {
@@ -83,7 +85,32 @@ const trData = {
   client_name: "TechCorp Inc.",
 };
 const ApplicantAwaiting = () => {
-  const [open, setopen] = useState(false);
+  const [open, setopen] = useState({
+    isVisible: false,
+    trData: {},
+  });
+  const [data, setdata] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(
+        `${BaseUrl}applicant_approval.php`
+
+        // { withCredentials: false, headers }
+      )
+      .then(function (response) {
+        console.log(response);
+        setdata(response?.data);
+        // if (response?.status === 200) {
+        //   cookie.set("token", response?.data?.token, { path: "/" });
+        //   navigate("/dashboard");
+        // }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }, []);
+
   const GetCard = ({ items }) => {
     console.log(items);
     return (
@@ -91,37 +118,53 @@ const ApplicantAwaiting = () => {
         <Card>
           <div className={styles.row}>
             <div className={styles.title}>
-              Training No:
-              <span>{items?.training_no}</span>
+              Name:
+              <span>{items?.name_adhar}</span>
             </div>
-            <div>
+            {/* <div>
               <Badge
                 title={items?.status}
                 varriant={items?.status?.toLowerCase()}
               />
+            </div> */}
+          </div>
+          <div className={`${styles.row} ${styles.rowgap}`}>
+            <div className={styles.title}>
+              Status: <span>{items?.status}</span>
+            </div>
+            {/* <div className={styles.title}>
+              Email: <span>{items?.email}</span>
+            </div> */}
+          </div>
+          <div className={`${styles.row} ${styles.rowgap}`}>
+            <div className={styles.title}>
+              Email: <span>{items?.email}</span>
+            </div>
+            <div className={styles.title}>
+              Date: <span>{items?.date}</span>
             </div>
           </div>
           <div className={`${styles.row} ${styles.rowgap}`}>
             <div className={styles.title}>
-              Start Date: <span>{items?.start_date}</span>
+              Current CTC <span>{styles?.current_ctc}</span>
             </div>
             <div className={styles.title}>
-              End Date: <span>{items?.end_date}</span>
+              Expected CTC: <span>{items?.expected_ctc}</span>
             </div>
           </div>
           <div className={`${styles.row} ${styles.rowgap}`}>
             <div className={styles.title}>
-              Type: <span>{styles?.type}</span>
+              Mobile: <span>{items?.mobile}</span>
             </div>
-            <div className={styles.title}>
-              Cost: <span>{items?.cost}</span>
-            </div>
-          </div>
-          <div className={`${styles.row} ${styles.rowgap}`}>
-            <div className={styles.title}>
-              Client: <span>{items?.trainer_name}</span>
-            </div>
-            <div className={styles.expandIcon} onClick={() => setopen(true)}>
+            <div
+              className={styles.expandIcon}
+              onClick={() =>
+                setopen({
+                  isVisible: true,
+                  trData: items,
+                })
+              }
+            >
               View More <img src={ViewMore} width={24} />
             </div>
           </div>
@@ -130,51 +173,126 @@ const ApplicantAwaiting = () => {
     );
   };
 
+  const trData = open?.trData;
   return (
     <div className={styles.container}>
       <Title varriant="h1" title="Applicant Waiting" />
       <Modal
-        open={open}
-        handleClose={() => setopen(false)}
+        open={open?.isVisible}
+        handleClose={() =>
+          setopen({
+            isVisible: false,
+            trData: {},
+          })
+        }
         title="Tr. No: 12233123"
       >
         <div className={styles.contentarea}>
           <div>
-            <label>Training Name:</label>
-            <p>{trData?.training_name}</p>
+            <label>Name:</label>
+            <p>{trData?.name_adhar}</p>
           </div>
           <div>
-            <label>Client Name:</label>
-            <p>{trData?.client_name}</p>
+            <label>Adhar No:</label>
+            <p>{trData?.adhar_no}</p>
           </div>
           <div>
-            <label>Start Date:</label>
-            <p>{trData?.start_date}</p>
+            <label>Adhar Card:</label>
+            <p>{trData?.adhar_card}</p>
           </div>
           <div>
-            <label>End Date:</label>
-            <p>{trData?.end_date}</p>
+            <label>Pan No:</label>
+            <p>{trData?.pan_no}</p>
           </div>
           <div>
-            <label>Type:</label>
-            <p>{trData?.type}</p>
+            <label>Pan Card:</label>
+            <p>{trData?.pan_card}</p>
           </div>
           <div>
-            <label>Trainer Name:</label>
-            <p>{trData?.trainer_name}</p>
+            <label>Cancel Cheque:</label>
+            <p>{trData?.cancel_cheque}</p>
           </div>
           <div>
-            <label>Cost:</label>
-            <p>{trData?.cost}</p>
+            <label>CV:</label>
+            <p>{trData?.updated_cv}</p>
           </div>
           <div>
-            <label>Status:</label>
-            <p>{trData?.status}</p>
+            <label>Payslips:</label>
+            <p>{trData?.payslips}</p>
+          </div>
+          <div>
+            <label>Payslips:</label>
+            <p>{trData?.payslips}</p>
+          </div>
+          <div>
+            <label>Payslips:</label>
+            <p>{trData?.payslips}</p>
+          </div>
+          <div>
+            <label>Payslips:</label>
+            <p>{trData?.payslips}</p>
+          </div>
+          <div>
+            <label>Payslips:</label>
+            <p>{trData?.payslips}</p>
+          </div>
+          <div>
+            <label>Payslips:</label>
+            <p>{trData?.payslips}</p>
+          </div>
+          <div>
+            <label>Payslips:</label>
+            <p>{trData?.payslips}</p>
+          </div>
+          <div>
+            <label>Payslips:</label>
+            <p>{trData?.payslips}</p>
+          </div>
+          <div>
+            <label>Payslips:</label>
+            <p>{trData?.payslips}</p>
+          </div>
+          <div>
+            <label>Payslips:</label>
+            <p>{trData?.payslips}</p>
+          </div>
+          <div>
+            <label>Payslips:</label>
+            <p>{trData?.payslips}</p>
+          </div>
+          <div>
+            <label>Payslips:</label>
+            <p>{trData?.payslips}</p>
+          </div>
+          <div>
+            <label>Payslips:</label>
+            <p>{trData?.payslips}</p>
+          </div>
+
+          <div>
+            <label>Payslips:</label>
+            <p>{trData?.payslips}</p>
+          </div>
+          <div>
+            <label>Payslips:</label>
+            <p>{trData?.payslips}</p>
+          </div>
+          <div>
+            <label>Payslips:</label>
+            <p>{trData?.payslips}</p>
+          </div>
+          <div>
+            <label>Payslips:</label>
+            <p>{trData?.payslips}</p>
+          </div>
+          <div>
+            <label>Payslips:</label>
+            <p>{trData?.payslips}</p>
           </div>
         </div>
       </Modal>
       <div className={styles.area}>
-        {sampleData?.map((items) => (
+        {data?.map((items) => (
           <GetCard items={items} />
         ))}
       </div>
