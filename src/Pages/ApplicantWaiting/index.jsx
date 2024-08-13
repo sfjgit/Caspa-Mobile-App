@@ -8,6 +8,7 @@ import axios from "axios";
 import { BaseUrl } from "../../config";
 import Title from "../../CommonComponents/Title/title";
 import Card from "../../CommonComponents/Card/card";
+import { toast, ToastContainer } from "react-toastify";
 import Modal from "../../components/Modal/modal";
 import Badge from "../../CommonComponents/Badge/Badge";
 
@@ -90,6 +91,7 @@ const ApplicantAwaiting = () => {
     trData: {},
   });
   const [data, setdata] = useState([]);
+  const [notes, setnotes] = useState(null);
 
   useEffect(() => {
     axios
@@ -119,7 +121,7 @@ const ApplicantAwaiting = () => {
           <div className={styles.row}>
             <div className={styles.title}>
               Name:
-              <span>{items?.name_adhar}</span>
+              <span> {items?.name_adhar}</span>
             </div>
             {/* <div>
               <Badge
@@ -146,7 +148,7 @@ const ApplicantAwaiting = () => {
           </div>
           <div className={`${styles.row} ${styles.rowgap}`}>
             <div className={styles.title}>
-              Current CTC <span>{styles?.current_ctc}</span>
+              Current CTC: <span>{items?.current_ctc}</span>
             </div>
             <div className={styles.title}>
               Expected CTC: <span>{items?.expected_ctc}</span>
@@ -173,9 +175,65 @@ const ApplicantAwaiting = () => {
     );
   };
 
+  const handleApprove = (e) => {
+    console.log(e);
+    const toastId = toast.info("Loading...", {
+      position: "top-right",
+    });
+    axios
+      .post(`${BaseUrl}update_applicant_status.php`, {
+        id: e,
+        status: "approve",
+        note: notes,
+      })
+      .then(function (response) {
+        console.log(response);
+        if (response?.data?.status) {
+          console.log(response);
+          toast.update(toastId, {
+            render: "Successfully Approved",
+            type: toast?.TYPE?.SUCCESS,
+            closeButton: true,
+            autoClose: 2000,
+            progressStyle: { background: "#097969" },
+            style: { color: "#097969" },
+          });
+        } else {
+          toast.update(toastId, {
+            render: response?.data?.message,
+            type: toast?.TYPE?.ERROR,
+            closeButton: true,
+            autoClose: 2000,
+            progressStyle: { background: "#B00020" },
+            style: { color: "#B00020" },
+          });
+        }
+
+        // setdata(response?.data);
+        // if (response?.status === 200) {
+        //   cookie.set("token", response?.data?.token, { path: "/" });
+        //   navigate("/dashboard");
+        // }
+      })
+      .catch(function (error) {
+        console.log(error);
+        toast.update(toastId, {
+          render: "Please try later",
+          type: toast?.TYPE?.ERROR,
+          closeButton: true,
+          autoClose: 2000,
+          progressStyle: { background: "#B00020" },
+          style: { color: "#B00020" },
+        });
+      });
+
+    // toast("Wow so easy!");
+  };
+
   const trData = open?.trData;
   return (
     <div className={styles.container}>
+      <ToastContainer />
       <Title varriant="h1" title="Applicant Waiting" />
       <Modal
         open={open?.isVisible}
@@ -185,12 +243,24 @@ const ApplicantAwaiting = () => {
             trData: {},
           })
         }
-        title="Tr. No: 12233123"
+        id={trData?.id}
+        title={`Name: ${trData?.name_adhar}`}
+        handleApprove={handleApprove}
+        notes={notes}
+        setnotes={setnotes}
       >
         <div className={styles.contentarea}>
           <div>
-            <label>Name:</label>
-            <p>{trData?.name_adhar}</p>
+            <label>Current CTC</label>
+            <p>{trData?.current_ctc}</p>
+          </div>
+          <div>
+            <label>Expected CTC</label>
+            <p>{trData?.expected_ctc}</p>
+          </div>
+          <div>
+            <label>Monthly CTC</label>
+            <p>{trData?.monthly_ctc}</p>
           </div>
           <div>
             <label>Adhar No:</label>
@@ -217,84 +287,238 @@ const ApplicantAwaiting = () => {
             <p>{trData?.updated_cv}</p>
           </div>
           <div>
-            <label>Payslips:</label>
-            <p>{trData?.payslips}</p>
+            <label>Passport Pic:</label>
+            <p>{trData?.passport_pic}</p>
           </div>
           <div>
-            <label>Payslips:</label>
-            <p>{trData?.payslips}</p>
+            <label>Current Company Offer</label>
+            <p>{trData?.current_company_offer}</p>
           </div>
           <div>
-            <label>Payslips:</label>
-            <p>{trData?.payslips}</p>
+            <label>Current Company Hike</label>
+            <p>{trData?.current_company_hike}</p>
           </div>
           <div>
-            <label>Payslips:</label>
-            <p>{trData?.payslips}</p>
+            <label>Status</label>
+            <p>{trData?.status}</p>
           </div>
           <div>
-            <label>Payslips:</label>
-            <p>{trData?.payslips}</p>
+            <label>Adhar Status</label>
+            <p>{trData?.adhar_status}</p>
           </div>
           <div>
-            <label>Payslips:</label>
-            <p>{trData?.payslips}</p>
+            <label>Pan Status</label>
+            <p>{trData?.pan_status}</p>
           </div>
           <div>
-            <label>Payslips:</label>
-            <p>{trData?.payslips}</p>
+            <label>Cheque Status</label>
+            <p>{trData?.cheque_status}</p>
           </div>
           <div>
-            <label>Payslips:</label>
-            <p>{trData?.payslips}</p>
+            <label>CV Status</label>
+            <p>{trData?.cv_status}</p>
           </div>
           <div>
-            <label>Payslips:</label>
-            <p>{trData?.payslips}</p>
+            <label>Payslips Status</label>
+            <p>{trData?.payslips_status}</p>
           </div>
           <div>
-            <label>Payslips:</label>
-            <p>{trData?.payslips}</p>
+            <label>Photo Status</label>
+            <p>{trData?.photo_status}</p>
           </div>
           <div>
-            <label>Payslips:</label>
-            <p>{trData?.payslips}</p>
+            <label>Offer Status</label>
+            <p>{trData?.offer_status}</p>
           </div>
           <div>
-            <label>Payslips:</label>
-            <p>{trData?.payslips}</p>
+            <label>Hike Status</label>
+            <p>{trData?.hike_status}</p>
           </div>
           <div>
-            <label>Payslips:</label>
-            <p>{trData?.payslips}</p>
+            <label>Recruiter Name</label>
+            <p>{trData?.recruiter_name}</p>
+          </div>
+          <div>
+            <label>HR Manager</label>
+            <p>{trData?.hr_manager}</p>
+          </div>
+          <div>
+            <label>Reporting Manager</label>
+            <p>{trData?.reporting_manager}</p>
           </div>
 
           <div>
-            <label>Payslips:</label>
-            <p>{trData?.payslips}</p>
+            <label>Applicant ID</label>
+            <p>{trData?.applicant_id}</p>
           </div>
           <div>
-            <label>Payslips:</label>
-            <p>{trData?.payslips}</p>
+            <label>Applicant Email</label>
+            <p>{trData?.applicant_email}</p>
           </div>
           <div>
-            <label>Payslips:</label>
-            <p>{trData?.payslips}</p>
+            <label>Experience</label>
+            <p>{trData?.experiance}</p>
           </div>
           <div>
-            <label>Payslips:</label>
-            <p>{trData?.payslips}</p>
+            <label>File</label>
+            <p>{trData?.file}</p>
           </div>
           <div>
-            <label>Payslips:</label>
-            <p>{trData?.payslips}</p>
+            <label>UAN Number</label>
+            <p>{trData?.uan_number}</p>
+          </div>
+          <div>
+            <label>Emergency Name</label>
+            <p>{trData?.emergancy_name}</p>
+          </div>
+          <div>
+            <label>Emergency Contact</label>
+            <p>{trData?.emergancy_contact}</p>
+          </div>
+          <div>
+            <label>Date</label>
+            <p>{trData?.date}</p>
+          </div>
+          <div>
+            <label>Division</label>
+            <p>{trData?.division}</p>
+          </div>
+          <div>
+            <label>Req ID</label>
+            <p>{trData?.req_id}</p>
+          </div>
+          <div>
+            <label>Req Date</label>
+            <p>{trData?.req_date}</p>
+          </div>
+          <div>
+            <label>Req Name</label>
+            <p>{trData?.req_name}</p>
+          </div>
+          <div>
+            <label>Designation</label>
+            <p>{trData?.designation}</p>
+          </div>
+          <div>
+            <label>Dep Type</label>
+            <p>{trData?.dep_type}</p>
+          </div>
+          <div>
+            <label>BU Type</label>
+            <p>{trData?.bu_type}</p>
+          </div>
+          <div>
+            <label>Dep Location</label>
+            <p>{trData?.dep_location}</p>
+          </div>
+          <div>
+            <label>Lead Name</label>
+            <p>{trData?.lead_name}</p>
+          </div>
+          <div>
+            <label>Working Mode</label>
+            <p>{trData?.working_mode}</p>
+          </div>
+          <div>
+            <label>R Experience</label>
+            <p>{trData?.r_experience}</p>
+          </div>
+          <div>
+            <label>EN CTC</label>
+            <p>{trData?.en_ctc}</p>
+          </div>
+          <div>
+            <label>DOJ</label>
+            <p>{trData?.doj}</p>
+          </div>
+          <div>
+            <label>Client Name</label>
+            <p>{trData?.client_name}</p>
+          </div>
+          <div>
+            <label>Letter Status</label>
+            <p>{trData?.letter_status}</p>
+          </div>
+          <div>
+            <label>C Mode</label>
+            <p>{trData?.c_mode}</p>
+          </div>
+          <div>
+            <label>C Hike</label>
+            <p>{trData?.c_hike}</p>
+          </div>
+          <div>
+            <label>Note</label>
+            <p>{trData?.note}</p>
+          </div>
+          <div>
+            <label>RL</label>
+            <p>{trData?.rl}</p>
+          </div>
+          <div>
+            <label>Relieving Letter</label>
+            <p>{trData?.relieving_letter}</p>
+          </div>
+          <div>
+            <label>RL Status</label>
+            <p>{trData?.rl_status}</p>
+          </div>
+          <div>
+            <label>C Company</label>
+            <p>{trData?.c_company}</p>
+          </div>
+          <div>
+            <label>Position C</label>
+            <p>{trData?.position_c}</p>
+          </div>
+          <div>
+            <label>U Type</label>
+            <p>{trData?.u_type}</p>
+          </div>
+          <div>
+            <label>Address</label>
+            <p>{trData?.address}</p>
+          </div>
+          <div>
+            <label>Validation Status</label>
+            <p>{trData?.validation_status}</p>
+          </div>
+          <div>
+            <label>Interviewer Name</label>
+            <p>{trData?.interviewer_name}</p>
+          </div>
+          <div>
+            <label>UAN Status</label>
+            <p>{trData?.uan_status}</p>
+          </div>
+          <div>
+            <label>Prev Client Name</label>
+            <p>{trData?.prev_client_name}</p>
+          </div>
+          <div>
+            <label>Validation Note</label>
+            <p>{trData?.validation_note}</p>
+          </div>
+          <div>
+            <label>C Location</label>
+            <p>{trData?.c_location}</p>
+          </div>
+          <div>
+            <label>Applicant Loc</label>
+            <p>{trData?.applicant_loc}</p>
+          </div>
+          <div>
+            <label>Prev Client Name 2</label>
+            <p>{trData?.prev_client_name2}</p>
           </div>
         </div>
       </Modal>
       <div className={styles.area}>
-        {data?.map((items) => (
-          <GetCard items={items} />
-        ))}
+        {data && data?.length > 0 ? (
+          data?.map((items) => <GetCard items={items} />)
+        ) : (
+          <p>Record Not Found!!</p>
+        )}
       </div>
     </div>
   );

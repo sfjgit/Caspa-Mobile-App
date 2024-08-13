@@ -11,14 +11,26 @@
     }
     .children {
       @apply overflow-auto;
-      height: 460px;
+      height: 420px;
     }
-    .button {
-      @apply bg-primary text-white rounded-lg w-full h-10;
+    .footer {
       bottom: 50px;
       position: absolute;
-      left: 10%;
-      width: 80%;
+      // left: 10%;
+      width: 90%;
+      background: white;
+      padding-top: 20px;
+      textarea {
+        @apply rounded-lg border w-full mb-2 px-2 py-1 text-sm;
+      }
+      .button {
+        @apply bg-primary text-white rounded-lg w-full h-10;
+        width: 100%;
+        left: 10%;
+      }
+      .disabled {
+        @apply bg-gray-100 cursor-not-allowed;
+      }
     }
   }
 }

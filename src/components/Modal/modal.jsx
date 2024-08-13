@@ -7,13 +7,23 @@ import Title from "../../CommonComponents/Title/title";
 import styles from "./modal.module.scss";
 import { useEffect } from "react";
 
-const Drawer = ({ open, handleClose, title, children }) => {
+const Drawer = ({
+  open,
+  handleClose,
+  title,
+  id,
+  handleApprove,
+  setnotes,
+  notes,
+  children,
+}) => {
   const [isOpen, setIsOpen] = useState(true);
 
   useEffect(() => {
     setIsOpen(open);
   }, [open]);
 
+  console.log(notes);
   return (
     <>
       {isOpen && (
@@ -29,7 +39,21 @@ const Drawer = ({ open, handleClose, title, children }) => {
               </div>
             </div>
             <div className={styles.children}>{children}</div>
-            <button className={styles.button}>Approve</button>
+            <div className={styles.footer}>
+              <label>
+                Note<span className="text-error">*</span>
+              </label>
+              <textarea onChange={(e) => setnotes(e?.target?.value)} />
+              <button
+                className={`${styles.button} ${
+                  (!notes || notes === null) && styles.disabled
+                }`}
+                onClick={() => handleApprove(id)}
+                disabled={!notes || notes === null}
+              >
+                Approve
+              </button>
+            </div>
           </div>
         </div>
       )}

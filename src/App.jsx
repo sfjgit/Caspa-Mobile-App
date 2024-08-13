@@ -13,6 +13,8 @@ import ApplicationAwaiting from "./Pages/ApplicantWaiting";
 import Cookies from "universal-cookie";
 import { useEffect } from "react";
 import ProtectedRoute from "./ProtectedRoute";
+import "react-toastify/dist/ReactToastify.css";
+
 // import ProtectedRoute from "./ProtectedRoute";
 
 // import router from "./router";
