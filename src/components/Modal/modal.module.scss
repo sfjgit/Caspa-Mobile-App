@@ -4,29 +4,30 @@
     @apply opacity-50 bg-black absolute w-full h-full;
   }
   .modalWrap {
-    @apply absolute z-50 w-full overflow-auto bottom-0 bg-white p-4;
+    @apply absolute z-50 w-full overflow-auto bottom-0 bg-white;
     min-height: 90dvh;
     .row {
-      @apply flex justify-between items-center;
+      @apply flex justify-between items-center px-4 pt-4;
     }
     .children {
-      @apply overflow-auto;
+      @apply overflow-auto px-4;
       height: 420px;
     }
     .footer {
-      bottom: 50px;
+      @apply border-t-2 pl-4;
+      bottom: 65px;
       position: absolute;
       // left: 10%;
-      width: 90%;
+      width: 100%;
       background: white;
-      padding-top: 20px;
+      padding-top: 5px;
       textarea {
         @apply rounded-lg border w-full mb-2 px-2 py-1 text-sm;
+        width: 94%;
       }
       .button {
         @apply bg-primary text-white rounded-lg w-full h-10;
-        width: 100%;
-        left: 10%;
+        width: 94%;
       }
       .disabled {
         @apply bg-gray-100 cursor-not-allowed;
