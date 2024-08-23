@@ -207,6 +207,8 @@ const ApplicantAwaiting = () => {
         console.log(response);
         if (response?.data?.status) {
           console.log(response);
+          setselectedData([]);
+
           toast.update(toastId, {
             render: "Successfully Approved",
             type: toast?.TYPE?.SUCCESS,
@@ -215,6 +217,23 @@ const ApplicantAwaiting = () => {
             progressStyle: { background: "#097969" },
             style: { color: "#097969" },
           });
+          axios
+            .get(
+              `${BaseUrl}applicant_approval.php`
+
+              // { withCredentials: false, headers }
+            )
+            .then(function (response) {
+              console.log(response);
+              setdata(response?.data);
+              // if (response?.status === 200) {
+              //   cookie.set("token", response?.data?.token, { path: "/" });
+              //   navigate("/dashboard");
+              // }
+            })
+            .catch(function (error) {
+              console.log(error);
+            });
         } else {
           toast.update(toastId, {
             render: response?.data?.message,
