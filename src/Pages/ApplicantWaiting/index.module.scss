@@ -1,4 +1,10 @@
 .container {
+  .button {
+    @apply bg-primary text-white rounded-lg px-4 py-1;
+  }
+  .disabled {
+    @apply bg-gray-100 cursor-not-allowed;
+  }
   .area {
     @apply mt-5 mb-12;
     .row {

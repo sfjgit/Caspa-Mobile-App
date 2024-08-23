@@ -90,6 +90,7 @@ const ApplicantAwaiting = () => {
     isVisible: false,
     trData: {},
   });
+  const [selectData, setselectedData] = useState([]);
   const [data, setdata] = useState([]);
   const [notes, setnotes] = useState(null);
 
@@ -113,13 +114,29 @@ const ApplicantAwaiting = () => {
       });
   }, []);
 
+  const handleChange = (e, key) => {
+    if (e) {
+      setselectedData([...selectData, key]);
+    } else {
+      const selData = selectData;
+      const newselData = selData?.filter((i) => i !== key);
+
+      setselectedData(newselData);
+    }
+  };
+
   const GetCard = ({ items }) => {
     console.log(items);
     return (
       <div className="mb-5">
         <Card>
           <div className={styles.row}>
-            <div className={styles.title}>
+            <div className={`${styles.title} 'flex items-center h-auto'`}>
+              <input
+                type="checkbox"
+                checked={selectData?.includes(items?.id) || false}
+                onChange={(e) => handleChange(e?.target?.checked, items?.id)}
+              />{" "}
               Name:
               <span> {items?.name_adhar}</span>
             </div>
@@ -175,16 +192,16 @@ const ApplicantAwaiting = () => {
     );
   };
 
-  const handleApprove = (e) => {
-    console.log(e);
+  const handleApprove = (e, isMulti = false) => {
+    console.log(e, isMulti);
     const toastId = toast.info("Loading...", {
       position: "top-right",
     });
     axios
       .post(`${BaseUrl}update_applicant_status.php`, {
-        id: e,
+        id: isMulti ? selectData : [e],
         status: "approve",
-        note: notes,
+        note: notes || "Approved",
       })
       .then(function (response) {
         console.log(response);
@@ -234,7 +251,19 @@ const ApplicantAwaiting = () => {
   return (
     <div className={styles.container}>
       <ToastContainer />
-      <Title varriant="h1" title="Applicant Waiting" />
+      <div className="flex justify-between">
+        <Title varriant="h1" title="Applicant Waiting" />
+        <button
+          className={`${styles.button} ${
+            selectData && selectData?.length <= 0 && styles.disabled
+          }`}
+          onClick={() => handleApprove(selectData, true)}
+          disabled={selectData && selectData?.length <= 0}
+        >
+          Approve
+        </button>
+      </div>
+
       <Modal
         open={open?.isVisible}
         handleClose={() =>
