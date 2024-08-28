@@ -11,7 +11,7 @@ import Home from "./Pages/Home";
 import Login from "./Pages/Login/login";
 import ApplicationAwaiting from "./Pages/ApplicantWaiting";
 import PaymentRequest from "./Pages/PaymentRequest";
-import Nda from "./Pages/nda";
+import Nda from "./Pages/Nda";
 
 import Cookies from "universal-cookie";
 import { useEffect } from "react";
