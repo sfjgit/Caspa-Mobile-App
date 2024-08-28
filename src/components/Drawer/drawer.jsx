@@ -17,6 +17,8 @@ import Payment from "../../assets/payment-request.webp";
 import Close from "../../assets/close.svg";
 import Home from "../../assets/home.svg";
 
+import { useNavigate } from "react-router-dom";
+
 import styles from "./drawer.module.scss";
 import { useEffect } from "react";
 
@@ -26,11 +28,11 @@ const itemData = [
     key: "applicant-awaiting",
     icon: Awaiting,
   },
-  {
-    title: "DMM Campaign",
-    key: "dmm-campaign",
-    icon: Campaign,
-  },
+  // {
+  //   title: "DMM Campaign",
+  //   key: "dmm-campaign",
+  //   icon: Campaign,
+  // },
   {
     title: "Payment Request",
     key: "payment-request",
@@ -54,6 +56,7 @@ const itemData = [
 ];
 
 const Drawer = ({ open, handleClose }) => {
+  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(true);
 
   useEffect(() => {
@@ -89,17 +92,35 @@ const Drawer = ({ open, handleClose }) => {
                   <div className={styles.modalContentInnerWrap}>
                     <div className={styles.drawer}>
                       <div className={styles.header}>
-                        <img src={Close} width={30} />
+                        <img
+                          src={Close}
+                          width={30}
+                          onClick={() => {
+                            setIsOpen(false);
+                            handleClose();
+                          }}
+                        />
                       </div>
                       <ul>
-                        <li>
-                          {" "}
+                        <li
+                          onClick={() => {
+                            setIsOpen(false);
+                            handleClose();
+                            navigate(`/dashboard`);
+                          }}
+                        >
                           <img src={Home} width={24} />
-                          Home
+                          Home s
                         </li>
                         {itemData?.map((e) => {
                           return (
-                            <li>
+                            <li
+                              onClick={() => {
+                                setIsOpen(false);
+                                handleClose();
+                                navigate(`/${e?.key}`);
+                              }}
+                            >
                               <img src={e?.icon} width={24} />
                               {e?.title}
                             </li>

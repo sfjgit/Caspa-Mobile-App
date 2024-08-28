@@ -17,11 +17,11 @@ const itemData = [
     key: "applicant-awaiting",
     icon: Awaiting,
   },
-  {
-    title: "DMM Campaign",
-    key: "dmm-campaign",
-    icon: Campaign,
-  },
+  // {
+  //   title: "DMM Campaign",
+  //   key: "dmm-campaign",
+  //   icon: Campaign,
+  // },
   {
     title: "Payment Request",
     key: "payment-request",

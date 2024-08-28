@@ -10,9 +10,13 @@ import Layout from "./components/Layout/layout";
 import Home from "./Pages/Home";
 import Login from "./Pages/Login/login";
 import ApplicationAwaiting from "./Pages/ApplicantWaiting";
+import PaymentRequest from "./Pages/PaymentRequest";
+import Nda from "./Pages/nda";
+
 import Cookies from "universal-cookie";
 import { useEffect } from "react";
 import ProtectedRoute from "./ProtectedRoute";
+
 import "react-toastify/dist/ReactToastify.css";
 
 // import ProtectedRoute from "./ProtectedRoute";
@@ -80,6 +84,14 @@ function App() {
         {
           path: "/applicant-awaiting",
           element: <ApplicationAwaiting />,
+        },
+        {
+          path: "/payment-request",
+          element: <PaymentRequest />,
+        },
+        {
+          path: "/nda",
+          element: <Nda />,
         },
       ],
     },

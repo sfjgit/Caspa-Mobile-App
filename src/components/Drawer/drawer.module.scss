@@ -20,7 +20,7 @@
   .modalInsideWrap {
     @apply absolute inset-0 overflow-hidden;
     .modalContentMainWrap {
-      @apply pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10;
+      @apply fixed inset-y-0 right-0 flex max-w-full pl-10;
 
       .modalContentWrap {
         @apply flex h-full flex-col overflow-y-scroll bg-white shadow-xl

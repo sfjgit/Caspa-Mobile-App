@@ -20,7 +20,7 @@ const Appbar = ({ handleOpen }) => {
     <div className={styles.appbarContainer}>
       <div className={styles.row}>
         <div className={styles.area}>
-          <img src={Home} />
+          <img src={Home} onClick={() => navigate("/dashboard")} />
           <p>Home</p>
         </div>
         <div className={styles.area} onClick={handleOpen}>
