@@ -17,18 +17,7 @@ import ViewMore from "../../assets/viewmore.png";
 
 import styles from "./index.module.scss";
 
-const trData = {
-  training_no: "001",
-  start_date: "2024-08-01",
-  end_date: "2024-08-05",
-  status: "Completed",
-  type: "Technical",
-  cost: "1,23,123",
-  trainer_name: "John Doe",
-  training_name: "Advanced Python Programming",
-  client_name: "TechCorp Inc.",
-};
-const Nda = () => {
+const ClientMeeting = () => {
   const [open, setopen] = useState({
     isVisible: false,
     trData: {},
@@ -40,7 +29,7 @@ const Nda = () => {
   useEffect(() => {
     axios
       .get(
-        `${BaseUrl}nda_approval.php`
+        `${BaseUrl}client_meeting_tracker.php`
 
         // { withCredentials: false, headers }
       )
@@ -75,12 +64,12 @@ const Nda = () => {
         <Card>
           <div className={styles.row}>
             <div className={`${styles.title} 'flex items-center h-auto'`}>
-              <input
+              {/* <input
                 type="checkbox"
                 checked={selectData?.includes(items?.id) || false}
                 onChange={(e) => handleChange(e?.target?.checked, items?.id)}
-              />{" "}
-              Description:
+              />{" "} */}
+              Client Name:
               <span> {items?.client_name}</span>
               <div></div>
             </div>
@@ -101,23 +90,20 @@ const Nda = () => {
           </div> */}
           <div className={`${styles.row} ${styles.rowgap}`}>
             <div className={styles.title}>
-              Client Rate: <span>{items?.client_rate}</span>
-            </div>
-            {/* <div className={styles.title}>
-              Date: <span>{items?.start_date}</span>
-            </div> */}
-          </div>
-          <div className={`${styles.row} ${styles.rowgap}`}>
-            <div className={styles.title}>
-              Nda No : <span>{items?.nda_no}</span>
-            </div>
-            <div className={styles.title}>
-              End Date: <span>{items?.end_date}</span>
+              Client Contact: <span>{items?.c_s_contact}</span>
             </div>
           </div>
           <div className={`${styles.row} ${styles.rowgap}`}>
             <div className={styles.title}>
-              Amount: <span>{items?.gst}</span>
+              Mode : <span>{items?.mode}</span>
+            </div>
+            <div className={styles.title}>
+              Revenue Gen : <span>{items?.revenue_gen}</span>
+            </div>
+          </div>
+          <div className={`${styles.row} ${styles.rowgap}`}>
+            <div className={styles.title}>
+              Location: <span>{items?.location}</span>
             </div>
             <div
               className={styles.expandIcon}
@@ -163,7 +149,7 @@ const Nda = () => {
           });
           axios
             .get(
-              `${BaseUrl}nda_approval.php`
+              `${BaseUrl}client_meeting_tracker.php`
               // { withCredentials: false, headers }
             )
             .then(function (response) {
@@ -250,8 +236,8 @@ const Nda = () => {
     <div className={styles.container}>
       <ToastContainer />
       <div className="flex justify-between">
-        <Title varriant="h1" title="Nda" />
-        <button
+        <Title varriant="h1" title="Client Meetings" />
+        {/* <button
           className={`${styles.button} ${
             selectData && selectData?.length <= 0 && styles.disabled
           }`}
@@ -259,7 +245,7 @@ const Nda = () => {
           disabled={selectData && selectData?.length <= 0}
         >
           Approve
-        </button>
+        </button> */}
       </div>
 
       <Modal
@@ -274,213 +260,154 @@ const Nda = () => {
         title={`Name: ${trData?.client_name}`}
         handleApprove={handleApprove}
         notes={notes}
+        isApprove={false}
         setnotes={setnotes}
       >
         <div className={styles.contentarea}>
           <div>
-            <label className="capitalize">added by</label>
-            <p>{trData?.added_by}</p>
+            <label className="capitalize">a names</label>
+            <p>{trData?.a_names}</p>
           </div>
           <div>
-            <label className="capitalize">added date</label>
-            <p>{trData?.added_date}</p>
+            <label className="capitalize">a names1</label>
+            <p>{trData?.a_names1}</p>
+          </div>
+
+          <div>
+            <label className="capitalize">addeddate</label>
+            <p>{trData?.addeddate}</p>
           </div>
           <div>
-            <label className="capitalize">booking date</label>
-            <p>{trData?.booking_date}</p>
+            <label className="capitalize">assign to</label>
+            <p>{trData?.assign_to}</p>
           </div>
           <div>
-            <label className="capitalize">caspa id</label>
-            <p>{trData?.caspa_id}</p>
+            <label className="capitalize">assign to1</label>
+            <p>{trData?.assign_to1}</p>
+          </div>
+          <div>
+            <label className="capitalize">c s contact</label>
+            <p>{trData?.c_s_contact}</p>
+          </div>
+          <div>
+            <label className="capitalize">c s designation</label>
+            <p>{trData?.c_s_designation}</p>
+          </div>
+          <div>
+            <label className="capitalize">c s mail</label>
+            <p>{trData?.c_s_mail}</p>
+          </div>
+          <div>
+            <label className="capitalize">c s name</label>
+            <p>{trData?.c_s_name}</p>
+          </div>
+          <div>
+            <label className="capitalize">c size</label>
+            <p>{trData?.c_size}</p>
           </div>
           <div>
             <label className="capitalize">client name</label>
             <p>{trData?.client_name}</p>
           </div>
           <div>
-            <label className="capitalize">client rate</label>
-            <p>{trData?.client_rate}</p>
+            <label className="capitalize">client status</label>
+            <p>{trData?.client_status}</p>
           </div>
           <div>
-            <label className="capitalize">contact client</label>
-            <p>{trData?.contact_client}</p>
+            <label className="capitalize">feedback1</label>
+            <p>{trData?.feedback1}</p>
           </div>
           <div>
-            <label className="capitalize">contact sfj</label>
-            <p>{trData?.contact_sfj}</p>
+            <label className="capitalize">feedback2</label>
+            <p>{trData?.feedback2}</p>
           </div>
           <div>
-            <label className="capitalize">course code</label>
-            <p>{trData?.course_code}</p>
+            <label className="capitalize">feedback3</label>
+            <p>{trData?.feedback3}</p>
           </div>
           <div>
-            <label className="capitalize">d lead</label>
-            <p>{trData?.d_lead}</p>
+            <label className="capitalize">feedback4</label>
+            <p>{trData?.feedback4}</p>
           </div>
           <div>
-            <label className="capitalize">daytype</label>
-            <p>{trData?.daytype}</p>
+            <label className="capitalize">feedback5</label>
+            <p>{trData?.feedback5}</p>
           </div>
           <div>
-            <label className="capitalize">end date</label>
-            <p>{trData?.end_date}</p>
+            <label className="capitalize">feedback6</label>
+            <p>{trData?.feedback6}</p>
           </div>
           <div>
-            <label className="capitalize">file</label>
-            <p>{trData?.file}</p>
-            <p onClick={() => downloadPdfBlob(trData?.file)}>
-              <img src={DownloadIcon} width={24} height={24} />
-            </p>
+            <label className="capitalize">feedback7</label>
+            <p>{trData?.feedback7}</p>
           </div>
           <div>
-            <label className="capitalize">file1</label>
-            <p onClick={() => downloadPdfBlob(trData?.file1)}>
-              <img src={DownloadIcon} width={24} height={24} />
-            </p>
+            <label className="capitalize">feedback8</label>
+            <p>{trData?.feedback8}</p>
           </div>
           <div>
-            <label className="capitalize">gst</label>
-            <p>{trData?.gst}</p>
+            <label className="capitalize">feedback9</label>
+            <p>{trData?.feedback9}</p>
+          </div>
+          <div>
+            <label className="capitalize">feedback10</label>
+            <p>{trData?.feedback10}</p>
           </div>
           <div>
             <label className="capitalize">id</label>
             <p>{trData?.id}</p>
           </div>
           <div>
-            <label className="capitalize">id1</label>
-            <p>{trData?.id1}</p>
+            <label className="capitalize">industry</label>
+            <p>{trData?.industry}</p>
           </div>
           <div>
-            <label className="capitalize">location w w</label>
-            <p>{trData?.location_w_w}</p>
+            <label className="capitalize">inv date</label>
+            <p>{trData?.inv_date}</p>
           </div>
           <div>
-            <label className="capitalize">nda no</label>
-            <p>{trData?.nda_no}</p>
+            <label className="capitalize">inv date1</label>
+            <p>{trData?.inv_date1}</p>
           </div>
           <div>
-            <label className="capitalize">nda status</label>
-            <p>{trData?.nda_status}</p>
+            <label className="capitalize">inv time</label>
+            <p>{trData?.inv_time}</p>
           </div>
           <div>
-            <label className="capitalize">payment term</label>
-            <p>{trData?.payment_term}</p>
+            <label className="capitalize">inv time1</label>
+            <p>{trData?.inv_time1}</p>
           </div>
           <div>
-            <label className="capitalize">per d cost</label>
-            <p>{trData?.per_d_cost}</p>
+            <label className="capitalize">link</label>
+            <p>{trData?.link}</p>
           </div>
           <div>
-            <label className="capitalize">per h cost</label>
-            <p>{trData?.per_h_cost}</p>
+            <label className="capitalize">location</label>
+            <p>{trData?.location}</p>
           </div>
           <div>
-            <label className="capitalize">per m cost</label>
-            <p>{trData?.per_m_cost}</p>
+            <label className="capitalize">meeting status</label>
+            <p>{trData?.meeting_status}</p>
           </div>
           <div>
-            <label className="capitalize">profit p</label>
-            <p>{trData?.profit_p}</p>
+            <label className="capitalize">mode</label>
+            <p>{trData?.mode}</p>
           </div>
           <div>
-            <label className="capitalize">recruiter</label>
-            <p>{trData?.recruiter}</p>
+            <label className="capitalize">n attendies</label>
+            <p>{trData?.n_attendies}</p>
           </div>
           <div>
-            <label className="capitalize">remarks</label>
-            <p>{trData?.remarks}</p>
+            <label className="capitalize">req type</label>
+            <p>{trData?.req_type}</p>
           </div>
           <div>
-            <label className="capitalize">return date</label>
-            <p>{trData?.return_date}</p>
+            <label className="capitalize">revenue gen</label>
+            <p>{trData?.revenue_gen}</p>
           </div>
           <div>
-            <label className="capitalize">return location w w</label>
-            <p>{trData?.return_location_w_w}</p>
-          </div>
-          <div>
-            <label className="capitalize">sales p</label>
-            <p>{trData?.sales_p}</p>
-          </div>
-          <div>
-            <label className="capitalize">start date</label>
-            <p>{trData?.start_date}</p>
-          </div>
-          <div>
-            <label className="capitalize">status</label>
-            <p>{trData?.status}</p>
-          </div>
-          <div>
-            <label className="capitalize">tds amount</label>
-            <p>{trData?.tds_amount}</p>
-          </div>
-          <div>
-            <label className="capitalize">trainer address</label>
-            <p>{trData?.trainer_address}</p>
-          </div>
-          <div>
-            <label className="capitalize">trainer contact</label>
-            <p>{trData?.trainer_contact}</p>
-          </div>
-          <div>
-            <label className="capitalize">trainer cost</label>
-            <p>{trData?.trainer_cost}</p>
-          </div>
-          <div>
-            <label className="capitalize">trainer duration</label>
-            <p>{trData?.trainer_duration}</p>
-          </div>
-          <div>
-            <label className="capitalize">trainer duration d</label>
-            <p>{trData?.trainer_duration_d}</p>
-          </div>
-          <div>
-            <label className="capitalize">trainer duration m</label>
-            <p>{trData?.trainer_duration_m}</p>
-          </div>
-          <div>
-            <label className="capitalize">trainer email</label>
-            <p>{trData?.trainer_email}</p>
-          </div>
-          <div>
-            <label className="capitalize">trainer name</label>
-            <p>{trData?.trainer_name}</p>
-          </div>
-          <div>
-            <label className="capitalize">training duration</label>
-            <p>{trData?.training_duration}</p>
-          </div>
-          <div>
-            <label className="capitalize">training location</label>
-            <p>{trData?.training_location}</p>
-          </div>
-          <div>
-            <label className="capitalize">type</label>
-            <p>{trData?.type}</p>
-          </div>
-          <div>
-            <label className="capitalize">type1</label>
-            <p>{trData?.type1}</p>
-          </div>
-          <div>
-            <label className="capitalize">type2</label>
-            <p>{trData?.type2}</p>
-          </div>
-          <div>
-            <label className="capitalize">type3</label>
-            <p>{trData?.type3}</p>
-          </div>
-          <div>
-            <label className="capitalize">type4</label>
-            <p>{trData?.type4}</p>
-          </div>
-          <div>
-            <label className="capitalize">type5</label>
-            <p>{trData?.type5}</p>
-          </div>
-          <div>
-            <label className="capitalize">type7</label>
-            <p>{trData?.type7}</p>
+            <label className="capitalize">updateddate</label>
+            <p>{trData?.updateddate}</p>
           </div>
         </div>
       </Modal>
@@ -495,4 +422,4 @@ const Nda = () => {
   );
 };
 
-export default Nda;
+export default ClientMeeting;

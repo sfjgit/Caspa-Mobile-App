@@ -1,0 +1,45 @@
+.container {
+  .button {
+    @apply bg-primary text-white rounded-lg px-4 py-1;
+  }
+  .disabled {
+    @apply bg-gray-100 cursor-not-allowed;
+  }
+  .area {
+    @apply mt-5 mb-12;
+    .row {
+      @apply flex justify-between;
+      .title {
+        @apply font-semibold text-gray-600;
+        font-size: 13px;
+        span {
+          @apply font-normal;
+        }
+      }
+      .badge {
+        @apply font-medium bg-gray-100 px-3 rounded-xl text-sm text-gray-600;
+      }
+      .expandIcon {
+        @apply font-medium text-info text-sm flex gap-1 items-center;
+        img {
+          @apply bg-gray-100 rounded-full p-1;
+        }
+      }
+    }
+    .rowgap {
+      @apply mt-2;
+    }
+  }
+  .contentarea {
+    @apply mt-5;
+    label {
+      @apply font-semibold text-sm text-gray-600;
+    }
+    p {
+      @apply text-gray-600 text-sm;
+    }
+    div {
+      @apply mb-3;
+    }
+  }
+}

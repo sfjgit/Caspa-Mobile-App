@@ -12,6 +12,8 @@ import Login from "./Pages/Login/login";
 import ApplicationAwaiting from "./Pages/ApplicantWaiting";
 import PaymentRequest from "./Pages/PaymentRequest";
 import Nda from "./Pages/Nda";
+import InterviewTracker from "./Pages/InterviewTracker";
+import ClientMeeting from "./Pages/ClientMeeting";
 
 import Cookies from "universal-cookie";
 import { useEffect } from "react";
@@ -92,6 +94,14 @@ function App() {
         {
           path: "/nda",
           element: <Nda />,
+        },
+        {
+          path: "/interview-tracker",
+          element: <InterviewTracker />,
+        },
+        {
+          path: "/client-meeting",
+          element: <ClientMeeting />,
         },
       ],
     },

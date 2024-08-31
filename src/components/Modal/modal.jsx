@@ -16,6 +16,7 @@ const Drawer = ({
   setnotes,
   notes,
   children,
+  isApprove = true,
 }) => {
   const [isOpen, setIsOpen] = useState(true);
 
@@ -38,22 +39,28 @@ const Drawer = ({
                 <img src={Close} width={30} onClick={handleClose} />
               </div>
             </div>
-            <div className={styles.children}>{children}</div>
-            <div className={styles.footer}>
-              <label>
-                Note<span className="text-error">*</span>
-              </label>
-              <textarea onChange={(e) => setnotes(e?.target?.value)} />
-              <button
-                className={`${styles.button} ${
-                  (!notes || notes === null) && styles.disabled
-                }`}
-                onClick={() => handleApprove(id)}
-                disabled={!notes || notes === null}
-              >
-                Approve
-              </button>
+            <div
+              className={isApprove ? styles.childrenapprove : styles.children}
+            >
+              {children}
             </div>
+            {isApprove && (
+              <div className={styles.footer}>
+                <label>
+                  Note<span className="text-error">*</span>
+                </label>
+                <textarea onChange={(e) => setnotes(e?.target?.value)} />
+                <button
+                  className={`${styles.button} ${
+                    (!notes || notes === null) && styles.disabled
+                  }`}
+                  onClick={() => handleApprove(id)}
+                  disabled={!notes || notes === null}
+                >
+                  Approve
+                </button>
+              </div>
+            )}
           </div>
         </div>
       )}
