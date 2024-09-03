@@ -10,6 +10,7 @@ import Title from "../../CommonComponents/Title/title";
 import Card from "../../CommonComponents/Card/card";
 import { toast, ToastContainer } from "react-toastify";
 import Modal from "../../components/Modal/modal";
+import ApproveModal from "../../components/ApproveModal/modal";
 import Badge from "../../CommonComponents/Badge/Badge";
 import DownloadIcon from "../../assets/download-icon.png";
 
@@ -32,6 +33,7 @@ const Nda = () => {
   const [open, setopen] = useState({
     isVisible: false,
     trData: {},
+    isApprove: false,
   });
   const [selectData, setselectedData] = useState([]);
   const [data, setdata] = useState([]);
@@ -124,6 +126,7 @@ const Nda = () => {
               onClick={() =>
                 setopen({
                   isVisible: true,
+                  isApprove: false,
                   trData: items,
                 })
               }
@@ -168,6 +171,11 @@ const Nda = () => {
             )
             .then(function (response) {
               console.log(response);
+              setopen({
+                ...open,
+                isVisible: false,
+                isApprove: false,
+              });
               setdata(response?.data);
               // if (response?.status === 200) {
               //   cookie.set("token", response?.data?.token, { path: "/" });
@@ -255,17 +263,39 @@ const Nda = () => {
           className={`${styles.button} ${
             selectData && selectData?.length <= 0 && styles.disabled
           }`}
-          onClick={() => handleApprove(selectData, true)}
+          onClick={() =>
+            setopen({
+              ...open,
+              isApprove: true,
+            })
+          }
           disabled={selectData && selectData?.length <= 0}
         >
           Approve
         </button>
       </div>
 
+      <ApproveModal
+        open={open?.isApprove}
+        handleClose={() =>
+          setopen({
+            isVisible: false,
+            isApprove: false,
+            trData: {},
+          })
+        }
+        id={trData?.id}
+        title=""
+        handleApprove={handleApprove}
+        notes={notes}
+        setnotes={setnotes}
+      />
+
       <Modal
         open={open?.isVisible}
         handleClose={() =>
           setopen({
+            isApprove: false,
             isVisible: false,
             trData: {},
           })

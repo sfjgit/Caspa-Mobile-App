@@ -12,6 +12,7 @@ import { toast, ToastContainer } from "react-toastify";
 import Modal from "../../components/Modal/modal";
 import Badge from "../../CommonComponents/Badge/Badge";
 import DownloadIcon from "../../assets/download-icon.png";
+import ApproveModal from "../../components/ApproveModal/modal";
 
 import ViewMore from "../../assets/viewmore.png";
 
@@ -31,16 +32,23 @@ const trData = {
 const InterviewTracker = () => {
   const [open, setopen] = useState({
     isVisible: false,
+    isApprove: false,
     trData: {},
   });
   const [selectData, setselectedData] = useState([]);
   const [data, setdata] = useState([]);
-  const [notes, setnotes] = useState(null);
+  const [notes, setnotes] = useState({
+    notes: "",
+    notes1: "",
+    notes2: "",
+    notes3: "",
+    notes4: "",
+  });
 
   useEffect(() => {
     axios
       .get(
-        `${BaseUrl}inv_tracker_Approval.php`
+        `${BaseUrl}applicant_approval.php`
 
         // { withCredentials: false, headers }
       )
@@ -75,11 +83,11 @@ const InterviewTracker = () => {
         <Card>
           <div className={styles.row}>
             <div className={`${styles.title} 'flex items-center h-auto'`}>
-              <input
+              {/* <input
                 type="checkbox"
                 checked={selectData?.includes(items?.id) || false}
                 onChange={(e) => handleChange(e?.target?.checked, items?.id)}
-              />{" "}
+              />{" "} */}
               Name:
               <span> {items?.name_adhar}</span>
               <div></div>
@@ -119,11 +127,30 @@ const InterviewTracker = () => {
             <div className={styles.title}>
               Added Date : <span>{items?.added_date}</span>
             </div>
+          </div>
+
+          <div className={`${styles.row} ${styles.rowgap}`}>
+            <button
+              className={`${styles.button} ${
+                selectData && selectData?.length <= 0 && styles.disabled
+              }`}
+              onClick={() =>
+                setopen({
+                  ...open,
+                  isApprove: true,
+                  trData: items,
+                })
+              }
+              disabled={selectData && selectData?.length <= 0}
+            >
+              Approve
+            </button>
             <div
               className={styles.expandIcon}
               onClick={() =>
                 setopen({
                   isVisible: true,
+                  isApprove: false,
                   trData: items,
                 })
               }
@@ -141,11 +168,47 @@ const InterviewTracker = () => {
     const toastId = toast.info("Loading...", {
       position: "top-right",
     });
+
+    console.log(open?.trData, open);
+    const payload =
+      trData?.assign_to !== "siva sarathy"
+        ? {
+            id: isMulti ? selectData : e,
+            assign_to: trData?.assign_to,
+            manager_status: "Selected",
+            manager_note: notes?.notes || "",
+            note2: notes?.notes1 || "",
+            note3: notes?.notes2 || "",
+            note4: notes?.notes3 || "",
+            note5: notes?.notes4 || "",
+          }
+        : trData?.assign_to_admin == "siva sarathy"
+        ? {
+            id: isMulti ? selectData : e,
+            assign_to_admin: trData?.assign_to_admin,
+            manager_status1: "Selected",
+            manager_note1: notes?.notes || "",
+            note2_3: notes?.notes1 || "",
+            note3_3: notes?.notes2 || "",
+            note4_3: notes?.notes3 || "",
+            note5_3: notes?.notes4 || "",
+          }
+        : trData?.assign_to_admin1 == "siva sarathy"
+        ? {
+            id: isMulti ? selectData : e,
+            assign_to_admin1: trData?.assign_to_admin,
+            admin_status: "Selected",
+            admin_note: notes?.notes || "",
+            note2_4: notes?.notes1 || "",
+            note3_4: notes?.notes2 || "",
+            note4_4: notes?.notes3 || "",
+            note5_4: notes?.notes4 || "",
+          }
+        : {};
+
     axios
-      .post(`${BaseUrl}update_inv_tracker.php`, {
-        id: isMulti ? selectData : [e],
-        admin_status: "approve",
-        remarks: notes || "Approved",
+      .post(`${BaseUrl}update_inv_trackers.php`, {
+        ...payload,
       })
       .then(function (response) {
         console.log(response);
@@ -246,27 +309,42 @@ const InterviewTracker = () => {
   };
 
   const trData = open?.trData;
+
+  console.log(trData);
   return (
     <div className={styles.container}>
       <ToastContainer />
       <div className="flex justify-between">
         <Title varriant="h1" title="Interview Tracker" />
-        <button
-          className={`${styles.button} ${
-            selectData && selectData?.length <= 0 && styles.disabled
-          }`}
-          onClick={() => handleApprove(selectData, true)}
-          disabled={selectData && selectData?.length <= 0}
-        >
-          Approve
-        </button>
       </div>
+      <ApproveModal
+        open={open?.isApprove}
+        handleClose={() =>
+          setopen({
+            isVisible: false,
+            isApprove: false,
+            trData: {},
+          })
+        }
+        id={trData?.id}
+        title=""
+        handleApprove={handleApprove}
+        notes={notes}
+        setnotes={(e, key) =>
+          setnotes({
+            ...notes,
+            [key]: e,
+          })
+        }
+        isInteview={true}
+      />
 
       <Modal
         open={open?.isVisible}
         handleClose={() =>
           setopen({
             isVisible: false,
+            isApprove: false,
             trData: {},
           })
         }
@@ -275,6 +353,7 @@ const InterviewTracker = () => {
         handleApprove={handleApprove}
         notes={notes}
         setnotes={setnotes}
+        isApprove={false}
       >
         <div className={styles.contentarea}>
           <div>
