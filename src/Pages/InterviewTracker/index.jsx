@@ -141,7 +141,7 @@ const InterviewTracker = () => {
                   trData: items,
                 })
               }
-              disabled={selectData && selectData?.length <= 0}
+              // disabled={selectData && selectData?.length <= 0}
             >
               Approve
             </button>
