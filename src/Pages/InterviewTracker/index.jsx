@@ -48,7 +48,7 @@ const InterviewTracker = () => {
   useEffect(() => {
     axios
       .get(
-        `${BaseUrl}applicant_approval.php`
+        `${BaseUrl}inv_tracker_Approval.php`
 
         // { withCredentials: false, headers }
       )
@@ -131,9 +131,7 @@ const InterviewTracker = () => {
 
           <div className={`${styles.row} ${styles.rowgap}`}>
             <button
-              className={`${styles.button} ${
-                selectData && selectData?.length <= 0 && styles.disabled
-              }`}
+              className={`${styles.button}`}
               onClick={() =>
                 setopen({
                   ...open,
@@ -207,7 +205,7 @@ const InterviewTracker = () => {
         : {};
 
     axios
-      .post(`${BaseUrl}update_inv_trackers.php`, {
+      .post(`${BaseUrl}update_inv_tracker.php`, {
         ...payload,
       })
       .then(function (response) {
@@ -319,13 +317,20 @@ const InterviewTracker = () => {
       </div>
       <ApproveModal
         open={open?.isApprove}
-        handleClose={() =>
+        handleClose={() => {
+          setnotes({
+            notes: "",
+            notes1: "",
+            notes2: "",
+            notes3: "",
+            notes4: "",
+          });
           setopen({
             isVisible: false,
             isApprove: false,
             trData: {},
-          })
-        }
+          });
+        }}
         id={trData?.id}
         title=""
         handleApprove={handleApprove}
@@ -341,13 +346,20 @@ const InterviewTracker = () => {
 
       <Modal
         open={open?.isVisible}
-        handleClose={() =>
+        handleClose={() => {
+          setnotes({
+            notes: "",
+            notes1: "",
+            notes2: "",
+            notes3: "",
+            notes4: "",
+          });
           setopen({
             isVisible: false,
             isApprove: false,
             trData: {},
-          })
-        }
+          });
+        }}
         id={trData?.id}
         title={`Name: ${trData?.name_adhar}`}
         handleApprove={handleApprove}

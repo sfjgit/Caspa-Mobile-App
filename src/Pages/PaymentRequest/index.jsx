@@ -41,18 +41,9 @@ const PaymentRequest = () => {
 
   useEffect(() => {
     axios
-      .get(
-        `${BaseUrl}payments_approval.php`
-
-        // { withCredentials: false, headers }
-      )
+      .get(`${BaseUrl}payments_approval.php`)
       .then(function (response) {
-        console.log(response);
         setdata(response?.data);
-        // if (response?.status === 200) {
-        //   cookie.set("token", response?.data?.token, { path: "/" });
-        //   navigate("/dashboard");
-        // }
       })
       .catch(function (error) {
         console.log(error);
@@ -71,7 +62,6 @@ const PaymentRequest = () => {
   };
 
   const GetCard = ({ items }) => {
-    console.log(items);
     return (
       <div className="mb-5">
         <Card>
@@ -86,28 +76,12 @@ const PaymentRequest = () => {
               <span> {items?.description}</span>
               <div></div>
             </div>
-            {/* <div>
-              <Badge
-                title={items?.status}
-                varriant={items?.status?.toLowerCase()}
-              />
-            </div> */}
           </div>
-          {/* <div className={`${styles.row} ${styles.rowgap}`}>
-            <div className={styles.title}>
-              Status: <span>{items?.admin_status}</span>
-            </div>
-            {/* <div className={styles.title}>
-              Email: <span>{items?.email}</span>
-            </div> 
-          </div> */}
+
           <div className={`${styles.row} ${styles.rowgap}`}>
             <div className={styles.title}>
               Payment Mode: <span>{items?.payment_mode}</span>
             </div>
-            {/* <div className={styles.title}>
-              Date: <span>{items?.start_date}</span>
-            </div> */}
           </div>
           <div className={`${styles.row} ${styles.rowgap}`}>
             <div className={styles.title}>
@@ -140,7 +114,6 @@ const PaymentRequest = () => {
   };
 
   const handleApprove = (e, isMulti = false) => {
-    console.log(e, isMulti);
     const toastId = toast.info("Loading...", {
       position: "top-right",
     });
@@ -151,9 +124,7 @@ const PaymentRequest = () => {
         note: notes || "Approved",
       })
       .then(function (response) {
-        console.log(response);
         if (response?.data?.status) {
-          console.log(response);
           setselectedData([]);
 
           toast.update(toastId, {
@@ -165,22 +136,14 @@ const PaymentRequest = () => {
             style: { color: "#097969" },
           });
           axios
-            .get(
-              `${BaseUrl}payments_approval.php`
-              // { withCredentials: false, headers }
-            )
+            .get(`${BaseUrl}payments_approval.php`)
             .then(function (response) {
-              console.log(response);
               setopen({
                 ...open,
                 isVisible: false,
                 isApprove: false,
               });
               setdata(response?.data);
-              // if (response?.status === 200) {
-              //   cookie.set("token", response?.data?.token, { path: "/" });
-              //   navigate("/dashboard");
-              // }
             })
             .catch(function (error) {
               console.log(error);
@@ -195,15 +158,8 @@ const PaymentRequest = () => {
             style: { color: "#B00020" },
           });
         }
-
-        // setdata(response?.data);
-        // if (response?.status === 200) {
-        //   cookie.set("token", response?.data?.token, { path: "/" });
-        //   navigate("/dashboard");
-        // }
       })
       .catch(function (error) {
-        console.log(error);
         toast.update(toastId, {
           render: "Please try later",
           type: toast?.TYPE?.ERROR,
@@ -213,12 +169,9 @@ const PaymentRequest = () => {
           style: { color: "#B00020" },
         });
       });
-
-    // toast("Wow so easy!");
   };
 
   const downloadPdfBlob = async (e) => {
-    // console.log(e, name);
     axios
       .get(`http://cirrus1.co/caspa/upload/${e}`, {
         responseType: "arraybuffer",
@@ -239,18 +192,6 @@ const PaymentRequest = () => {
         link.click();
       })
       .catch((error) => console.log(error));
-
-    // const response = await fetch(`${BaseUrl}upload/${e}`);
-    // const blob = await response.blob();
-    // const url = window.URL.createObjectURL(blob);
-    // const link = document.createElement("a");
-    // link.href = url;
-    // link.setAttribute("download", `${name}.pdf`);
-    // document.body.appendChild(link);
-    // link.click();
-    // link.parentNode.removeChild(link);
-
-    // console.log(link);
   };
 
   const trData = open?.trData;
@@ -277,13 +218,14 @@ const PaymentRequest = () => {
 
       <ApproveModal
         open={open?.isApprove}
-        handleClose={() =>
+        handleClose={() => {
           setopen({
             isVisible: false,
             isApprove: false,
             trData: {},
-          })
-        }
+          });
+          setnotes(null);
+        }}
         id={trData?.id}
         title=""
         handleApprove={handleApprove}
@@ -293,13 +235,14 @@ const PaymentRequest = () => {
 
       <Modal
         open={open?.isVisible}
-        handleClose={() =>
+        handleClose={() => {
           setopen({
             isVisible: false,
             isApprove: false,
             trData: {},
-          })
-        }
+          });
+          setnotes(null);
+        }}
         id={trData?.id}
         title={`Name: ${trData?.payment_mode}`}
         handleApprove={handleApprove}

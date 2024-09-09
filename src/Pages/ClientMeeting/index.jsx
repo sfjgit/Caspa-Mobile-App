@@ -250,12 +250,13 @@ const ClientMeeting = () => {
 
       <Modal
         open={open?.isVisible}
-        handleClose={() =>
+        handleClose={() => {
+          setnotes(null);
           setopen({
             isVisible: false,
             trData: {},
-          })
-        }
+          });
+        }}
         id={trData?.id}
         title={`Name: ${trData?.client_name}`}
         handleApprove={handleApprove}

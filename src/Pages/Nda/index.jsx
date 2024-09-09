@@ -41,18 +41,9 @@ const Nda = () => {
 
   useEffect(() => {
     axios
-      .get(
-        `${BaseUrl}nda_approval.php`
-
-        // { withCredentials: false, headers }
-      )
+      .get(`${BaseUrl}nda_approval.php`)
       .then(function (response) {
-        console.log(response);
         setdata(response?.data);
-        // if (response?.status === 200) {
-        //   cookie.set("token", response?.data?.token, { path: "/" });
-        //   navigate("/dashboard");
-        // }
       })
       .catch(function (error) {
         console.log(error);
@@ -71,7 +62,6 @@ const Nda = () => {
   };
 
   const GetCard = ({ items }) => {
-    console.log(items);
     return (
       <div className="mb-5">
         <Card>
@@ -86,28 +76,11 @@ const Nda = () => {
               <span> {items?.client_name}</span>
               <div></div>
             </div>
-            {/* <div>
-              <Badge
-                title={items?.status}
-                varriant={items?.status?.toLowerCase()}
-              />
-            </div> */}
           </div>
-          {/* <div className={`${styles.row} ${styles.rowgap}`}>
-            <div className={styles.title}>
-              Status: <span>{items?.admin_status}</span>
-            </div>
-            {/* <div className={styles.title}>
-              Email: <span>{items?.email}</span>
-            </div> 
-          </div> */}
           <div className={`${styles.row} ${styles.rowgap}`}>
             <div className={styles.title}>
               Client Rate: <span>{items?.client_rate}</span>
             </div>
-            {/* <div className={styles.title}>
-              Date: <span>{items?.start_date}</span>
-            </div> */}
           </div>
           <div className={`${styles.row} ${styles.rowgap}`}>
             <div className={styles.title}>
@@ -140,7 +113,6 @@ const Nda = () => {
   };
 
   const handleApprove = (e, isMulti = false) => {
-    console.log(e, isMulti);
     const toastId = toast.info("Loading...", {
       position: "top-right",
     });
@@ -151,9 +123,7 @@ const Nda = () => {
         remarks: notes || "Approved",
       })
       .then(function (response) {
-        console.log(response);
         if (response?.data?.status) {
-          console.log(response);
           setselectedData([]);
 
           toast.update(toastId, {
@@ -170,17 +140,12 @@ const Nda = () => {
               // { withCredentials: false, headers }
             )
             .then(function (response) {
-              console.log(response);
               setopen({
                 ...open,
                 isVisible: false,
                 isApprove: false,
               });
               setdata(response?.data);
-              // if (response?.status === 200) {
-              //   cookie.set("token", response?.data?.token, { path: "/" });
-              //   navigate("/dashboard");
-              // }
             })
             .catch(function (error) {
               console.log(error);
@@ -195,15 +160,8 @@ const Nda = () => {
             style: { color: "#B00020" },
           });
         }
-
-        // setdata(response?.data);
-        // if (response?.status === 200) {
-        //   cookie.set("token", response?.data?.token, { path: "/" });
-        //   navigate("/dashboard");
-        // }
       })
       .catch(function (error) {
-        console.log(error);
         toast.update(toastId, {
           render: "Please try later",
           type: toast?.TYPE?.ERROR,
@@ -218,7 +176,6 @@ const Nda = () => {
   };
 
   const downloadPdfBlob = async (e) => {
-    // console.log(e, name);
     axios
       .get(`https://cirrus1.co/caspa/proxy.php?file=${e}`, {
         responseType: "arraybuffer",
@@ -239,18 +196,6 @@ const Nda = () => {
         link.click();
       })
       .catch((error) => console.log(error));
-
-    // const response = await fetch(`${BaseUrl}upload/${e}`);
-    // const blob = await response.blob();
-    // const url = window.URL.createObjectURL(blob);
-    // const link = document.createElement("a");
-    // link.href = url;
-    // link.setAttribute("download", `${name}.pdf`);
-    // document.body.appendChild(link);
-    // link.click();
-    // link.parentNode.removeChild(link);
-
-    // console.log(link);
   };
 
   const trData = open?.trData;
@@ -277,13 +222,14 @@ const Nda = () => {
 
       <ApproveModal
         open={open?.isApprove}
-        handleClose={() =>
+        handleClose={() => {
           setopen({
             isVisible: false,
             isApprove: false,
             trData: {},
-          })
-        }
+          });
+          setnotes(null);
+        }}
         id={trData?.id}
         title=""
         handleApprove={handleApprove}
@@ -293,13 +239,14 @@ const Nda = () => {
 
       <Modal
         open={open?.isVisible}
-        handleClose={() =>
+        handleClose={() => {
+          setnotes(null);
           setopen({
             isApprove: false,
             isVisible: false,
             trData: {},
-          })
-        }
+          });
+        }}
         id={trData?.id}
         title={`Name: ${trData?.client_name}`}
         handleApprove={handleApprove}

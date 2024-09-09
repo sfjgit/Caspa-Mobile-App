@@ -110,7 +110,7 @@ const Drawer = ({ open, handleClose }) => {
                           }}
                         >
                           <img src={Home} width={24} />
-                          Home s
+                          Home
                         </li>
                         {itemData?.map((e) => {
                           return (

@@ -99,18 +99,9 @@ const ApplicantAwaiting = () => {
 
   useEffect(() => {
     axios
-      .get(
-        `${BaseUrl}applicant_approval.php`
-
-        // { withCredentials: false, headers }
-      )
+      .get(`${BaseUrl}applicant_approval.php`)
       .then(function (response) {
-        console.log(response);
         setdata(response?.data);
-        // if (response?.status === 200) {
-        //   cookie.set("token", response?.data?.token, { path: "/" });
-        //   navigate("/dashboard");
-        // }
       })
       .catch(function (error) {
         console.log(error);
@@ -129,7 +120,6 @@ const ApplicantAwaiting = () => {
   };
 
   const GetCard = ({ items }) => {
-    console.log(items);
     return (
       <div className="mb-5">
         <Card>
@@ -143,20 +133,11 @@ const ApplicantAwaiting = () => {
               Name:
               <span> {items?.name_adhar}</span>
             </div>
-            {/* <div>
-              <Badge
-                title={items?.status}
-                varriant={items?.status?.toLowerCase()}
-              />
-            </div> */}
           </div>
           <div className={`${styles.row} ${styles.rowgap}`}>
             <div className={styles.title}>
               Status: <span>{items?.status}</span>
             </div>
-            {/* <div className={styles.title}>
-              Email: <span>{items?.email}</span>
-            </div> */}
           </div>
           <div className={`${styles.row} ${styles.rowgap}`}>
             <div className={styles.title}>
@@ -196,7 +177,6 @@ const ApplicantAwaiting = () => {
   };
 
   const handleApprove = (e, isMulti = false) => {
-    console.log(e, isMulti);
     const toastId = toast.info("Loading...", {
       position: "top-right",
     });
@@ -207,9 +187,7 @@ const ApplicantAwaiting = () => {
         note: notes || "Approved",
       })
       .then(function (response) {
-        console.log(response);
         if (response?.data?.status) {
-          console.log(response);
           setselectedData([]);
 
           toast.update(toastId, {
@@ -226,17 +204,12 @@ const ApplicantAwaiting = () => {
               // { withCredentials: false, headers }
             )
             .then(function (response) {
-              console.log(response);
               setopen({
                 ...open,
                 isVisible: false,
                 isApprove: false,
               });
               setdata(response?.data);
-              // if (response?.status === 200) {
-              //   cookie.set("token", response?.data?.token, { path: "/" });
-              //   navigate("/dashboard");
-              // }
             })
             .catch(function (error) {
               console.log(error);
@@ -251,15 +224,8 @@ const ApplicantAwaiting = () => {
             style: { color: "#B00020" },
           });
         }
-
-        // setdata(response?.data);
-        // if (response?.status === 200) {
-        //   cookie.set("token", response?.data?.token, { path: "/" });
-        //   navigate("/dashboard");
-        // }
       })
       .catch(function (error) {
-        console.log(error);
         toast.update(toastId, {
           render: "Please try later",
           type: toast?.TYPE?.ERROR,
@@ -274,7 +240,6 @@ const ApplicantAwaiting = () => {
   };
 
   const downloadPdfBlob = async (e) => {
-    // console.log(e, name);
     axios
       .get(`https://cirrus1.co/caspa/proxy.php?file=${e}`, {
         responseType: "blob",
@@ -295,18 +260,6 @@ const ApplicantAwaiting = () => {
         link.click();
       })
       .catch((error) => console.log(error));
-
-    // const response = await fetch(`${BaseUrl}upload/${e}`);
-    // const blob = await response.blob();
-    // const url = window.URL.createObjectURL(blob);
-    // const link = document.createElement("a");
-    // link.href = url;
-    // link.setAttribute("download", `${name}.pdf`);
-    // document.body.appendChild(link);
-    // link.click();
-    // link.parentNode.removeChild(link);
-
-    // console.log(link);
   };
 
   const trData = open?.trData;
@@ -333,13 +286,14 @@ const ApplicantAwaiting = () => {
 
       <ApproveModal
         open={open?.isApprove}
-        handleClose={() =>
+        handleClose={() => {
           setopen({
             isVisible: false,
             isApprove: false,
             trData: {},
-          })
-        }
+          });
+          setnotes(null);
+        }}
         id={trData?.id}
         title=""
         handleApprove={handleApprove}
@@ -349,12 +303,13 @@ const ApplicantAwaiting = () => {
 
       <Modal
         open={open?.isVisible}
-        handleClose={() =>
+        handleClose={() => {
           setopen({
             isVisible: false,
             trData: {},
-          })
-        }
+          });
+          setnotes(null);
+        }}
         id={trData?.id}
         title={`Name: ${trData?.name_adhar}`}
         handleApprove={handleApprove}
