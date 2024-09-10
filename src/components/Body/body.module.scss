@@ -1,5 +1,6 @@
 .bodyContainer {
   @apply p-5 w-full overflow-auto;
+  padding-bottom: 120px;
   height: 100svh;
   // height: calc(100vh - 120px);
 }
