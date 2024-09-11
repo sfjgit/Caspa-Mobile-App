@@ -36,10 +36,14 @@
       }
       .button {
         @apply bg-primary text-white rounded-lg w-full h-10;
-        width: 94%;
+        // width: 94%;
+        width: 140px;
       }
       .disabled {
         @apply bg-gray-100 cursor-not-allowed;
+      }
+      .rejectbutton {
+        @apply bg-red-500;
       }
     }
   }

@@ -46,19 +46,27 @@ const Drawer = ({
             </div>
             {isApprove && (
               <div className={styles.footer}>
-                <label>
-                  Note<span className="text-error">*</span>
-                </label>
+                <div>
+                  <label>Note:</label>
+                </div>
                 <textarea onChange={(e) => setnotes(e?.target?.value)} />
-                <button
-                  className={`${styles.button} ${
-                    (!notes || notes === null) && styles.disabled
-                  }`}
-                  onClick={() => handleApprove(id)}
-                  disabled={!notes || notes === null}
-                >
-                  Approve
-                </button>
+                <div className="grid gap-5 w-full grid-flow-col auto-cols-max">
+                  <button
+                    className={`${styles.button}`}
+                    onClick={() => handleApprove(id, "Approve")}
+                    // disabled={!notes || notes === null}
+                  >
+                    Approve
+                  </button>
+
+                  <button
+                    className={`${styles.button} ${styles.rejectbutton}`}
+                    onClick={() => handleApprove(id, "Reject")}
+                    // disabled={!notes || notes === null}
+                  >
+                    Reject
+                  </button>
+                </div>
               </div>
             )}
           </div>

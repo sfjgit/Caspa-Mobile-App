@@ -113,15 +113,15 @@ const PaymentRequest = () => {
     );
   };
 
-  const handleApprove = (e, isMulti = false) => {
+  const handleApprove = (e, status, isMulti = false) => {
     const toastId = toast.info("Loading...", {
       position: "top-right",
     });
     axios
       .post(`${BaseUrl}update_payment_status.php`, {
         id: isMulti ? selectData : [e],
-        admin_status: "approve",
-        note: notes || "Approved",
+        admin_status: status === "Approve" ? "approve" : "reject",
+        note: notes ? notes : status === "Approve" ? "Approved" : "Rejected",
       })
       .then(function (response) {
         if (response?.data?.status) {

@@ -161,7 +161,7 @@ const InterviewTracker = () => {
     );
   };
 
-  const handleApprove = (e, isMulti = false) => {
+  const handleApprove = (e, status, isMulti = false) => {
     console.log(e, isMulti);
     const toastId = toast.info("Loading...", {
       position: "top-right",
@@ -173,7 +173,7 @@ const InterviewTracker = () => {
         ? {
             id: isMulti ? selectData : e,
             assign_to: trData?.assign_to,
-            manager_status: "Selected",
+            manager_status: status === "Approve" ? "Selected" : "Rejected",
             manager_note: notes?.notes || "",
             note2: notes?.notes1 || "",
             note3: notes?.notes2 || "",
@@ -184,7 +184,7 @@ const InterviewTracker = () => {
         ? {
             id: isMulti ? selectData : e,
             assign_to_admin: trData?.assign_to_admin,
-            manager_status1: "Selected",
+            manager_status1: status === "Approve" ? "Selected" : "Rejected",
             manager_note1: notes?.notes || "",
             note2_3: notes?.notes1 || "",
             note3_3: notes?.notes2 || "",
@@ -195,7 +195,7 @@ const InterviewTracker = () => {
         ? {
             id: isMulti ? selectData : e,
             assign_to_admin1: trData?.assign_to_admin,
-            admin_status: "Selected",
+            admin_status: status === "Approve" ? "Selected" : "Rejected",
             admin_note: notes?.notes || "",
             note2_4: notes?.notes1 || "",
             note3_4: notes?.notes2 || "",

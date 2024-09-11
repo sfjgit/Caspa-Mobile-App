@@ -112,15 +112,15 @@ const Nda = () => {
     );
   };
 
-  const handleApprove = (e, isMulti = false) => {
+  const handleApprove = (e, status, isMulti = false) => {
     const toastId = toast.info("Loading...", {
       position: "top-right",
     });
     axios
       .post(`${BaseUrl}update_nda_status.php`, {
         id: isMulti ? selectData : [e],
-        admin_status: "approve",
-        remarks: notes || "Approved",
+        admin_status: status === "Approve" ? "approve" : "reject",
+        remarks: notes ? notes : status === "Approve" ? "Approved" : "Rejected",
       })
       .then(function (response) {
         if (response?.data?.status) {

@@ -176,15 +176,16 @@ const ApplicantAwaiting = () => {
     );
   };
 
-  const handleApprove = (e, isMulti = false) => {
+  const handleApprove = (e, status, isMulti = false) => {
     const toastId = toast.info("Loading...", {
       position: "top-right",
     });
+    console.log(notes);
     axios
       .post(`${BaseUrl}update_applicant_status.php`, {
         id: isMulti ? selectData : [e],
-        status: "approve",
-        note: notes || "Approved",
+        status: status === "Approve" ? "approve" : "reject",
+        note: notes ? notes : status === "Approve" ? "Approved" : "Rejected",
       })
       .then(function (response) {
         if (response?.data?.status) {

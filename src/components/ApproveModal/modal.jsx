@@ -50,40 +50,56 @@ const Drawer = ({
             </div> */}
 
             <div className={styles.footer}>
-              <label>
-                Note<span className="text-error">*</span>
-              </label>
+              <div>
+                <label>Note</label>
+              </div>
 
               <textarea onChange={(e) => setnotes(e?.target?.value, "notes")} />
               {isInteview && (
                 <>
-                  <label>Note 2</label>
+                  <div>
+                    <label>Note 2</label>
+                  </div>
                   <textarea
                     onChange={(e) => setnotes(e?.target?.value, "notes1")}
                   />
-                  <label>Note 3</label>
+                  <div>
+                    <label>Note 3</label>
+                  </div>
                   <textarea
                     onChange={(e) => setnotes(e?.target?.value, "notes2")}
                   />
-                  <label>Note 4</label>
+                  <div>
+                    <label>Note 4</label>
+                  </div>
                   <textarea
                     onChange={(e) => setnotes(e?.target?.value, "notes3")}
                   />
-                  <label>Note 5</label>
+                  <div>
+                    <label>Note 5</label>
+                  </div>
                   <textarea
                     onChange={(e) => setnotes(e?.target?.value, "notes4")}
                   />
                 </>
               )}
-              <button
-                className={`${styles.button} ${
-                  (!notes || notes === null) && styles.disabled
-                }`}
-                onClick={() => handleApprove(id, !isInteview)}
-                disabled={!notes || notes === null}
-              >
-                Approve
-              </button>
+              <div className="grid gap-5 w-full grid-flow-col auto-cols-max">
+                <button
+                  className={`${styles.button}`}
+                  onClick={() => handleApprove(id, "Approve", !isInteview)}
+                  // disabled={!notes || notes === null}
+                >
+                  Approve
+                </button>
+
+                <button
+                  className={`${styles.button} ${styles.rejectbutton}`}
+                  onClick={() => handleApprove(id, "Reject", !isInteview)}
+                  // disabled={!notes || notes === null}
+                >
+                  Reject
+                </button>
+              </div>
             </div>
           </div>
         </div>
