@@ -50,6 +50,27 @@ const Drawer = ({
             </div> */}
 
             <div className={styles.footer}>
+              {isInteview && (
+                <>
+                  <div>
+                    <label>Status</label>
+                  </div>
+                  <select
+                    id="status"
+                    value={notes?.status}
+                    onChange={(e) => setnotes(e?.target?.value, "status")}
+                    style={{ width: "94%" }}
+                    className="block mb-3 px-3 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  >
+                    <option value="" disabled>
+                      -- Select Status --
+                    </option>
+                    <option value="selected">Selected</option>
+                    <option value="rejected">Rejected</option>
+                    <option value="hold">Hold</option>
+                  </select>
+                </>
+              )}
               <div>
                 <label>Note</label>
               </div>
@@ -89,16 +110,17 @@ const Drawer = ({
                   onClick={() => handleApprove(id, "Approve", !isInteview)}
                   // disabled={!notes || notes === null}
                 >
-                  Approve
+                  {isInteview ? "Submit" : "Approve"}
                 </button>
-
-                <button
-                  className={`${styles.button} ${styles.rejectbutton}`}
-                  onClick={() => handleApprove(id, "Reject", !isInteview)}
-                  // disabled={!notes || notes === null}
-                >
-                  Reject
-                </button>
+                {!isInteview && (
+                  <button
+                    className={`${styles.button} ${styles.rejectbutton}`}
+                    onClick={() => handleApprove(id, "Reject", !isInteview)}
+                    // disabled={!notes || notes === null}
+                  >
+                    Reject
+                  </button>
+                )}
               </div>
             </div>
           </div>

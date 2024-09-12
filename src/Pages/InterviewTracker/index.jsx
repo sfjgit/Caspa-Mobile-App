@@ -38,6 +38,7 @@ const InterviewTracker = () => {
   const [selectData, setselectedData] = useState([]);
   const [data, setdata] = useState([]);
   const [notes, setnotes] = useState({
+    status: "",
     notes: "",
     notes1: "",
     notes2: "",
@@ -174,6 +175,7 @@ const InterviewTracker = () => {
             id: isMulti ? selectData : e,
             assign_to: trData?.assign_to,
             manager_status: status === "Approve" ? "Selected" : "Rejected",
+            status: "",
             manager_note: notes?.notes || "",
             note2: notes?.notes1 || "",
             note3: notes?.notes2 || "",
@@ -185,6 +187,7 @@ const InterviewTracker = () => {
             id: isMulti ? selectData : e,
             assign_to_admin: trData?.assign_to_admin,
             manager_status1: status === "Approve" ? "Selected" : "Rejected",
+            status: "",
             manager_note1: notes?.notes || "",
             note2_3: notes?.notes1 || "",
             note3_3: notes?.notes2 || "",
@@ -195,6 +198,7 @@ const InterviewTracker = () => {
         ? {
             id: isMulti ? selectData : e,
             assign_to_admin1: trData?.assign_to_admin,
+            status: "",
             admin_status: status === "Approve" ? "Selected" : "Rejected",
             admin_note: notes?.notes || "",
             note2_4: notes?.notes1 || "",
@@ -205,7 +209,7 @@ const InterviewTracker = () => {
         : {};
 
     axios
-      .post(`${BaseUrl}update_inv_tracker.php`, {
+      .post(`${BaseUrl}update_inv_trackers.php`, {
         ...payload,
       })
       .then(function (response) {
